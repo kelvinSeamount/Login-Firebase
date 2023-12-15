@@ -26,6 +26,9 @@ const SignIn = () => {
       console.log(email, password);
       setEmail("");
       setPassword("");
+      sessionStorage.setItem("user", true);
+
+      //Route to mainpage
       router.push("/");
     } catch (e) {
       console.error(e);

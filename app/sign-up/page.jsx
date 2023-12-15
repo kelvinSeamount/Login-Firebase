@@ -33,6 +33,7 @@ const SignUp = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+      sessionStorage.setItem("user", true);
     } catch (e) {
       console.error(e);
     }
