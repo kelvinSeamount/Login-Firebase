@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/config";
-const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const SignUp = () => { // TODO: Please add an empty row before a function declaration.
+  const [email, setEmail] = useState(""); // TODO: Please define state type.
+  const [password, setPassword] = useState(""); // TODO: Please define state type.
+  const [confirmPassword, setConfirmPassword] = useState(""); // TODO: Please define state type.
 
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
@@ -24,6 +24,8 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     try {
+      //TODO: you should show a loader to the user while registration is in progress.
+
       const res = await createUserWithEmailAndPassword(
         email,
         password,
@@ -33,8 +35,14 @@ const SignUp = () => {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      sessionStorage.setItem("user", true);
+      sessionStorage.setItem("user", true); // TODO: You are setting state to a type that is not initially used. Please define the state type and set it to a valid value;
+
+      // TODO: when registration is completed, show user a success message and either show a button to go to login
+      //   or automatically redirect the user to login page.
+      // TODO: Bonus - after the registration is complete, not only do the above things but also already log the user
+      //   in before the redirection so that once on the login page the user gets automatically logged in.
     } catch (e) {
+      // TODO: Please show an error message to user.
       console.error(e);
     }
   };
@@ -50,6 +58,7 @@ const SignUp = () => {
           >
             Email
           </label>
+          {/*TODO: Please define the input text color. Currently it renders white and is not visible.*/}
           <input
             type="email"
             id="email"
