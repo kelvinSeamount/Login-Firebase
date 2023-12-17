@@ -8,6 +8,16 @@ import { signOut } from "firebase/auth";
 export default function Home() {
   const [user] = useAuthState(auth);
   const router = useRouter();
+  // TODO: You need to place this inside useEffect(() => {}, [iter]). Otherwise it throws an error.
+  //  Please create a custom hook that uses Firebase's onAuthStateChanged() function.
+  //   In that hook use onAuthStateChanged() to automatically log the user in if there is an active session.
+  // Error:
+  //  ⨯ app/page.jsx (11:22) @ sessionStorage
+  //  ⨯ ReferenceError: sessionStorage is not defined
+  //     at Home (./app/page.jsx:23:25)
+  //    9 |   const [user] = useAuthState(auth);
+  //   10 |   const router = useRouter();
+  // > 11 |   const userSession = sessionStorage.getItem("user");
   const userSession = sessionStorage.getItem("user");
 
   console.log({ user });

@@ -22,6 +22,8 @@ const SignIn = () => {
 
   const handleSubmit = async () => {
     try {
+      // TODO: Please show progress message to user so that they know that the login is loading.
+      //   Also during login loading disable the login button.
       const res = await signInWithEmailAndPassword(email, password);
       console.log(email, password);
       setEmail("");
@@ -31,6 +33,7 @@ const SignIn = () => {
       //Route to mainpage
       router.push("/");
     } catch (e) {
+      // TODO: Please show an error message to user.
       console.error(e);
     }
   };
