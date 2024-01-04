@@ -1,47 +1,47 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
+import { auth } from "../firebase/config";
 const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleConfirmPasswordChange = (e) => {
+  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     try {
-      const res = await createUserWithEmailAndPassword(
-        email,
-        password,
-        confirmPassword
-      );
+      const res = await createUserWithEmailAndPassword(email, password);
       console.log({ res });
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      sessionStorage.setItem("user", true);
-    } catch (e) {
-      console.error(e);
+      sessionStorage.setItem("user", "true");
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-gray-200 to-gray-300">
-      <form className="bg-white p-8 rounded shadow-md max-w-md w-full">
+      <form
+        className="bg-white p-8 rounded shadow-md max-w-md w-full"
+        onSubmit={handleSubmit}
+      >
         <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
         <div className="mb-4">
           <label
@@ -92,8 +92,7 @@ const SignUp = () => {
           />
         </div>
         <button
-          onClick={handleSubmit}
-          type="button"
+          type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
         >
           Sign Up

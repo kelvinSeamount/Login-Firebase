@@ -1,8 +1,9 @@
 "use client";
 import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
+
 import useAuthStateChange from "./customhook/useAuthStateChange";
+import React from "react";
 
 export default function Home() {
   const { user, handleLogOut } = useAuthStateChange();

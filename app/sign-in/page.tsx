@@ -1,37 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState, ChangeEvent } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/app/firebase/config";
+import { auth } from "../firebase/config";
 import { useRouter } from "next/navigation";
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
 
   //For routing to home page
   const router = useRouter();
 
-  const handleEmailChange = (e) => {
+  const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     try {
       const res = await signInWithEmailAndPassword(email, password);
       console.log(email, password);
       setEmail("");
       setPassword("");
-      sessionStorage.setItem("user", true);
+      sessionStorage.setItem("user", "true");
 
       //Route to mainpage
       router.push("/");
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -39,7 +40,7 @@ const SignIn = () => {
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-gray-200 to-gray-300">
       <div className="bg-white p-8 rounded-lg shadow-md w-full sm:max-w-md">
         <h2 className="text-2xl mb-6 text-center font-bold">Sign In</h2>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
               htmlFor="email"
@@ -73,8 +74,7 @@ const SignIn = () => {
             />
           </div>
           <button
-            onClick={handleSubmit}
-            type="button"
+            type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
           >
             Sign In
